@@ -1,18 +1,39 @@
-const fs = require('fs');
-const readline = require('readline');
-const {google} = require('googleapis');
+import Path from 'path';
+import fs from 'fs';
+import readline from 'readline';
+import { google } from 'googleapis';
 
 // If modifying these scopes, delete token.json.
 const SCOPES = ['https://www.googleapis.com/auth/spreadsheets'];
 const TOKEN_PATH = 'token.json';
 
-class GoogleSheets {
+class GoogleSheets { 
+  prepareData(json) {
+    const formattedDateDate = new Date(json.timestamp);
+    const formattedDate = formattedDateDate.toLocaleDateString('es-AR') + " " + formattedDateDate.toLocaleTimeString('es-AR');
+    const data = [
+      json.timestamp,
+      formattedDate,
+      json.bets.ct.ammount,
+      json.bets.ct.people,
+      json.last100.ct,
+      json.bets.t.ammount,
+      json.bets.t.people,
+      json.last100.t,
+      json.bets.bonus.ammount,
+      json.bets.bonus.people,
+      json.last100.bonus,
+      json.winner
+    ];
 
-  updateSpreadsheet(data) {
-    fs.readFile('credentials.json', (err, content) => {
+    this.data = data;
+  }
+
+  updateSpreadsheet() {
+    fs.readFile(Path.join(__dirname, '../../../credentials.json'), (err, content) => {
       if (err) return console.log('Error loading client secret file:', err);
       // Authorize a client with credentials, then call the Google Sheets API.
-      this.authorize(JSON.parse(content), this.addRow, data);
+      this.authorize(JSON.parse(content), this.addRow, this.data);
     });
   }
 
@@ -75,4 +96,4 @@ class GoogleSheets {
   }
 }
 
-module.exports = new GoogleSheets;
+export default new GoogleSheets();
