@@ -13,7 +13,7 @@ class Browser {
     this.browser = await Puppeteer.launch({
       ignoreDefaultArgs: ['--enable-automation'],
       headless: true,
-      args: ['--start-maximized', '--disable-web-security'],
+      args: ['--start-maximized', '--disable-web-security', '--no-sandbox'],
       defaultViewport: null
     });
     this.page = await this.browser.newPage();
