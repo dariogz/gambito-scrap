@@ -30,7 +30,7 @@
   "scripts": {
     "build": "babel ./app --out-dir dist",
     "start": "node ./dist/index.js",
-    "scrap-start": "forever start -a --uid scrap main.js",
+    "scrap-start": "forever start -a --uid scrap dist/index.js",
     "scrap-list": "forever list",
     "scrap-watch": "tail -f ~/.forever/scrap.log",
     "scrap-stop": "forever stop scrap"
