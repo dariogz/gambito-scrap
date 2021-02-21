@@ -12,7 +12,7 @@ class Browser {
   async setup() {
     this.browser = await Puppeteer.launch({
       ignoreDefaultArgs: ['--enable-automation'],
-      headless: false,
+      headless: true,
       args: ['--start-maximized', '--disable-web-security'],
       defaultViewport: null
     });
